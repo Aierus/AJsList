@@ -1,6 +1,6 @@
 import { ThemeProvider, createTheme } from '@mui/material/styles'
 
-import ProductsPage from './pages/Products'
+import ListProducts from './pages/ListProducts'
 
 export const theme = createTheme({
     palette: {
@@ -10,14 +10,14 @@ export const theme = createTheme({
         },
         text: {
             primary: '#F8F8F8',
-            secondary: '#DFDFDF',
+            secondary: '#CECECE',
         },
         primary: {
             main: '#8FCEF0',
         },
         secondary: {
             main: '#F8F8F8',
-            dark: '#DFDFDF',
+            dark: '#CECECE',
         },
     },
 })

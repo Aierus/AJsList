@@ -11,8 +11,15 @@ declare var require: any
 const img = require('../assets/sample-img.jpg')
 
 const firstHundredChars = (content: string) => {
-    if (content.length > 100) {
+    if (content.length > 99) {
         return content.slice(0, 97) + '...'
+    }
+    return content
+}
+
+const firstTwentyChars = (content: string) => {
+    if (content.length > 19) {
+        return content.slice(0, 17) + '...'
     }
     return content
 }
@@ -51,7 +58,7 @@ const ProductCard = ({ data, key }: PropTypes) => {
                         fontSize=".85rem"
                         color={theme.palette.text.primary}
                     >
-                        {data.title}
+                        {firstTwentyChars(data.title)}
                     </Typography>
 
                     <Typography

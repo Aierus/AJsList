@@ -14,22 +14,18 @@ const defaultContext: ProductsContext = {
     filter: null,
 }
 
-const productsContext = createContext<ProductsContext>(defaultContext)
+const filterContext = createContext<ProductsContext>(defaultContext)
 
-export const ProductsProvider = ({
-    children,
-}: {
-    children: React.ReactNode
-}) => {
+export const FilterProvider = ({ children }: { children: React.ReactNode }) => {
     const [filterState, setFilterState] = useState<Filter>(null)
 
     return (
-        <productsContext.Provider
+        <filterContext.Provider
             value={{ filter: filterState, setFilter: setFilterState }}
         >
             {children}
-        </productsContext.Provider>
+        </filterContext.Provider>
     )
 }
 
-export const useFilter = () => useContext(productsContext)
+export const useFilter = () => useContext(filterContext)

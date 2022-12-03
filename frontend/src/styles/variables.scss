@@ -1,0 +1,18 @@
+// Colors
+
+$white-700: #DFDFDF;
+$white-900: #F8F8F8;
+
+$blue-500: #8FCEF0;
+
+$dark-700: #292E2E;
+$dark-900: #111717;
+
+:export {
+    default-background: $dark-900;
+    paper-background: $dark-900;
+    text-primary: $white-900;
+    text-secondary: $white-700;
+    primary: $blue-500
+
+}

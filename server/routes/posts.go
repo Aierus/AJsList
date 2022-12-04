@@ -41,7 +41,6 @@ func AddPost(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": msg})
 		return
 	}
-
 	defer cancel()
 	c.JSON(http.StatusOK, result)
 }
@@ -102,21 +101,21 @@ func GetPostById(c *gin.Context) {
 }
 
 // update a username for a post
-func UpdateUsername(c *gin.Context) {
+func UpdateImage(c *gin.Context) {
 	orderID := c.Params.ByName("id")
 	docID, _ := primitive.ObjectIDFromHex(orderID)
 	var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
-	type Username struct {
-		Username *string `json:"username"`
+	type Image struct {
+		Image *string `json:"image"`
 	}
-	var username Username
-	if err := c.BindJSON(&username); err != nil {
+	var image Image
+	if err := c.BindJSON(&image); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 	result, err := postCollection.UpdateOne(ctx, bson.M{"_id": docID},
 		bson.D{
-			{"$set", bson.D{{"username", username.Username}}},
+			{"$set", bson.D{{"image", image.Image}}},
 		},
 	)
 	if err != nil {

@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 	"time"
+	"strconv"
 
 	"server/models"
 
@@ -13,6 +14,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
+
 )
 
 var validate = validator.New()
@@ -85,6 +87,7 @@ func GetPostsByUsername(c *gin.Context) {
 	c.JSON(http.StatusOK, posts)
 }
 
+// gets post based on location value 
 func GetPostsByLocation(c *gin.Context) {
 
 	location := c.Params.ByName("location")
@@ -104,6 +107,25 @@ func GetPostsByLocation(c *gin.Context) {
 	c.JSON(http.StatusOK, posts)
 }
 
+//  gets post based on a price value, will get documents less than or equal to price
+func GetPostsByPrice(c *gin.Context) {
+
+	price, err := strconv.ParseInt(c.Params.ByName("price"), 10, 64)
+	var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
+	var posts []bson.M
+	cursor, err := postCollection.Find(ctx, bson.M{"price": bson.M{"$lte": price}})
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	if err = cursor.All(ctx, &posts); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	defer cancel()
+	fmt.Println(posts)
+	c.JSON(http.StatusOK, posts)
+}
 
 // get a post by its id
 func GetPostById(c *gin.Context) {

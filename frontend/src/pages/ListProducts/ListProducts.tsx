@@ -1,6 +1,7 @@
 import * as React from 'react'
 
 import { useFetchPosts } from '../../hooks/useFetch'
+import { useFilter } from '../../providers/useFilter'
 
 import { useTheme } from '@mui/material/styles'
 import Box from '@mui/material/Box'
@@ -12,6 +13,7 @@ import ProductCardList from './ProductCardList'
 
 const ListProductsInternal = () => {
     const theme = useTheme()
+    const { filter, setFilter } = useFilter()
     const { data, loading, error } = useFetchPosts()
 
     return (

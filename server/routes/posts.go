@@ -85,6 +85,26 @@ func GetPostsByUsername(c *gin.Context) {
 	c.JSON(http.StatusOK, posts)
 }
 
+func GetPostsByLocation(c *gin.Context) {
+
+	location := c.Params.ByName("location")
+	var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
+	var posts []bson.M
+	cursor, err := postCollection.Find(ctx, bson.M{"location": location})
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	if err = cursor.All(ctx, &posts); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	defer cancel()
+	fmt.Println(posts)
+	c.JSON(http.StatusOK, posts)
+}
+
+
 // get a post by its id
 func GetPostById(c *gin.Context) {
 	postID := c.Params.ByName("id")

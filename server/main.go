@@ -26,6 +26,7 @@ func main() {
 	router.POST("/post/create", routes.AddPost)
 	//R
 	router.GET("/user/:username", routes.GetPostsByUsername)
+	router.GET("/posts/:location", routes.GetPostsByLocation)
 	router.GET("/posts", routes.GetPosts)
 	router.GET("/post/:id/", routes.GetPostById)
 	//U

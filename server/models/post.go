@@ -11,4 +11,5 @@ type Post struct {
 	Location    *string            `json:"location"`
 	Price       *float64           `json:"price"`
 	Description *string            `json:"description"`
+	Image		*string			   `json:"image"`	
 }

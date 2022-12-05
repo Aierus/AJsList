@@ -29,7 +29,7 @@ func main() {
 	router.GET("/posts", routes.GetPosts)
 	router.GET("/post/:id/", routes.GetPostById)
 	//U
-	router.PUT("/user/update/:id", routes.UpdateUsername)
+	router.PUT("/image/update/:id", routes.UpdateImage)
 	router.PUT("/post/update/:id", routes.UpdatePost)
 	//D
 	router.DELETE("/post/delete/:id", routes.DeletePost)

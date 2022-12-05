@@ -17,7 +17,14 @@ const ProductCardList = ({ data }: PropTypes) => {
     }
 
     return (
-        <Box display="flex" gap={3} justifyContent="center" flexWrap="wrap">
+        <Box
+            display="flex"
+            gap={3}
+            justifyContent="center"
+            flexWrap="wrap"
+            width="100"
+            id="outer-box"
+        >
             {data.map((product, productIdx) => (
                 <ProductCard data={product} key={productIdx} />
             ))}

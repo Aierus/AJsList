@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { useEffect } from 'react'
 
 import { useFetchPosts } from '../../hooks/useFetch'
 import { useFilter } from '../../providers/useFilter'
@@ -14,25 +15,20 @@ import ProductCardList from './ProductCardList'
 const ListProductsInternal = () => {
     const theme = useTheme()
     const { filter, setFilter } = useFilter()
-    const { data, loading, error } = useFetchPosts()
+    const { data, loading, error } = useFetchPosts(filter)
 
     return (
         <Container sx={{ py: 5 }}>
             <Stack spacing={3} sx={{ pt: 10 }}>
                 <TableHeader theme={theme} />
 
-                <Box
-                    display="flex"
-                    flexWrap="wrap"
-                    gap={3}
-                    justifyContent="center"
-                >
-                    {loading ? (
+                {loading ? (
+                    <Box width="100%" display="flex" justifyContent="center">
                         <p style={{ color: '#ffffff' }}>Loading...</p>
-                    ) : (
-                        <ProductCardList data={data} />
-                    )}
-                </Box>
+                    </Box>
+                ) : (
+                    <ProductCardList data={data} />
+                )}
             </Stack>
         </Container>
     )

@@ -11,7 +11,15 @@ export type PostType = {
     username: string
 }
 
-export const useFetchPosts = () => {
+const makeUrl = (filter: string | null) => {
+    if (!filter) {
+        return '/api/posts'
+    } else {
+        return `/api/user/${filter}`
+    }
+}
+
+export const useFetchPosts = (filter: string | null) => {
     const [data, setData] = useState<PostType[]>()
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState<any>()
@@ -19,14 +27,14 @@ export const useFetchPosts = () => {
     useEffect(() => {
         setLoading(true)
         axios
-            .get('/api/posts')
+            .get(makeUrl(filter))
             .then((res) => {
                 setData(res.data)
                 console.log(res.data)
             })
             .catch((err) => setError(err))
             .finally(() => setLoading(false))
-    }, [])
+    }, [filter])
 
     return { data, loading, error }
 }

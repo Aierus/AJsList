@@ -1,6 +1,7 @@
 import * as React from 'react'
 
-import { Box, Button, Container, Typography, useTheme } from '@mui/material'
+import { Box, Container, Typography, useTheme } from '@mui/material'
+import { ConnectButton } from './ConnectButton'
 
 const NavbarContainer = () => {
     const theme = useTheme()
@@ -27,7 +28,7 @@ const NavbarContainer = () => {
                     AJ's List
                 </Typography>
 
-                <Button variant="contained">Connect</Button>
+                <ConnectButton /> 
             </Box>
         </Container>
     )

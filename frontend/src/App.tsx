@@ -6,6 +6,7 @@ import Container from '@mui/material/Container'
 
 import { theme } from './theme'
 import ListProducts from './pages/ListProducts'
+import Product from './pages/Product'
 import Navbar from './components/Navbar'
 
 function App() {
@@ -22,7 +23,7 @@ function App() {
                 <Navbar />
                 <Routes>
                     <Route path="" element={<ListProducts />} />
-                    <Route path="/:id" element={<h1>Product ID</h1>} />
+                    <Route path="/:id" element={<Product />} />
                 </Routes>
             </Container>
         </ThemeProvider>

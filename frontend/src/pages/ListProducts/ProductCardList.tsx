@@ -1,8 +1,6 @@
 import * as React from 'react'
 import { PostType } from '../../hooks/useFetch'
 
-import { Theme } from '@mui/material'
-
 import ProductCard from '../../components/ProductCard'
 
 import Box from '@mui/material/Box'

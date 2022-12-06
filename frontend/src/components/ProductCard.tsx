@@ -6,6 +6,7 @@ import { useTheme } from '@mui/material/styles'
 import Box from '@mui/material/Box'
 import Stack from '@mui/material/Stack'
 import { Typography } from '@mui/material'
+import { Link } from 'react-router-dom'
 
 declare var require: any
 const img = require('../assets/sample-img.jpg')
@@ -43,69 +44,70 @@ const ProductCard = ({ data, key }: PropTypes) => {
             }}
             key={key}
         >
-            <img src={img} width="100%" height="66%" />
+            <Link to={`/${data._id}`} style={{ textDecoration: 'none' }}>
+                <img src={img} width="100%" height="66%" />
+                <Stack spacing={1}>
+                    <Box
+                        display="flex"
+                        justifyContent="space-between"
+                        alignItems="end"
+                        sx={{ px: 2 }}
+                    >
+                        <Typography
+                            variant="h6"
+                            component="h6"
+                            fontSize=".85rem"
+                            color={theme.palette.text.primary}
+                        >
+                            {firstTwentyChars(data.title)}
+                        </Typography>
 
-            <Stack spacing={1}>
-                <Box
-                    display="flex"
-                    justifyContent="space-between"
-                    alignItems="end"
-                    sx={{ px: 2 }}
-                >
-                    <Typography
-                        variant="h6"
-                        component="h6"
-                        fontSize=".85rem"
-                        color={theme.palette.text.primary}
+                        <Typography
+                            variant="h6"
+                            component="h6"
+                            fontSize=".85rem"
+                            color={theme.palette.text.secondary}
+                        >
+                            {data.username}
+                        </Typography>
+                    </Box>
+                    <Box
+                        display="flex"
+                        justifyContent="space-between"
+                        alignItems="end"
+                        sx={{ px: 2 }}
                     >
-                        {firstTwentyChars(data.title)}
-                    </Typography>
+                        <Typography
+                            variant="h6"
+                            component="h6"
+                            fontSize=".8rem"
+                            color={theme.palette.text.primary}
+                        >
+                            {data.location}
+                        </Typography>
 
-                    <Typography
-                        variant="h6"
-                        component="h6"
-                        fontSize=".85rem"
-                        color={theme.palette.text.secondary}
-                    >
-                        {data.username}
-                    </Typography>
-                </Box>
-                <Box
-                    display="flex"
-                    justifyContent="space-between"
-                    alignItems="end"
-                    sx={{ px: 2 }}
-                >
-                    <Typography
-                        variant="h6"
-                        component="h6"
-                        fontSize=".8rem"
-                        color={theme.palette.text.primary}
-                    >
-                        {data.location}
-                    </Typography>
-
-                    <Typography
-                        variant="h6"
-                        component="h6"
-                        fontSize=".8rem"
-                        color={theme.palette.text.secondary}
-                    >
-                        ${data.price}
-                    </Typography>
-                </Box>
-                <Box sx={{ px: 2 }}>
-                    <Typography
-                        variant="h6"
-                        component="h6"
-                        fontSize=".75rem"
-                        color={theme.palette.text.secondary}
-                        lineHeight=".85rem"
-                    >
-                        {firstHundredChars(data.description)}
-                    </Typography>
-                </Box>
-            </Stack>
+                        <Typography
+                            variant="h6"
+                            component="h6"
+                            fontSize=".8rem"
+                            color={theme.palette.text.secondary}
+                        >
+                            ${data.price}
+                        </Typography>
+                    </Box>
+                    <Box sx={{ px: 2 }}>
+                        <Typography
+                            variant="h6"
+                            component="h6"
+                            fontSize=".75rem"
+                            color={theme.palette.text.secondary}
+                            lineHeight=".85rem"
+                        >
+                            {firstHundredChars(data.description)}
+                        </Typography>
+                    </Box>
+                </Stack>
+            </Link>
         </Box>
     )
 }

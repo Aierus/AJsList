@@ -27,10 +27,10 @@ const firstTwentyChars = (content: string) => {
 
 type PropTypes = {
     data: PostType
-    key: number
+    keyVal: number
 }
 
-const ProductCard = ({ data, key }: PropTypes) => {
+const ProductCard = ({ data, keyVal }: PropTypes) => {
     const theme = useTheme()
 
     return (
@@ -42,7 +42,7 @@ const ProductCard = ({ data, key }: PropTypes) => {
                 aspectRatio: '2 / 3',
                 background: theme.palette.background.paper,
             }}
-            key={key}
+            key={keyVal}
         >
             <Link to={`/${data._id}`} style={{ textDecoration: 'none' }}>
                 <img src={img} width="100%" height="66%" />

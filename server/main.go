@@ -21,7 +21,7 @@ func main() {
 
 	router.Use(cors.Default())
 
-	// these are the endpoints
+	// Posts endpoints
 	//C
 	router.POST("/post/create", routes.AddPost)
 	//R
@@ -36,7 +36,16 @@ func main() {
 	//D
 	router.DELETE("/post/delete/:id", routes.DeletePost)
 
+	// Users endpoints
+	router.POST("/signup", routes.Signup)
+
+
+
+
+
 	//this runs the server and allows it to listen to requests.
 	router.Run(":" + port)
+
+
 
 }

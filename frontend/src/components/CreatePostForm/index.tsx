@@ -3,9 +3,9 @@ import * as React from 'react'
 import PostFromInternal from './PostFormInternal'
 import { FormProvider } from '../../providers/useFormProvider'
 
-const CreatePostForm = () => {
+const CreatePostForm = ({ account }: { account: string }) => {
     return (
-        <FormProvider>
+        <FormProvider account={account}>
             <PostFromInternal />
         </FormProvider>
     )

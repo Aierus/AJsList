@@ -1,6 +1,7 @@
 import * as React from 'react'
+import { Link } from 'react-router-dom'
 
-import { Box, Container, Typography, useTheme } from '@mui/material'
+import { Box, Button, Container, Typography, useTheme } from '@mui/material'
 import { ConnectButton } from './ConnectButton'
 
 const NavbarContainer = () => {
@@ -28,7 +29,11 @@ const NavbarContainer = () => {
                     AJ's List
                 </Typography>
 
-                <ConnectButton /> 
+                <Link to="/create">
+                    <Button variant="contained">Create Post</Button>
+                </Link>
+
+                <ConnectButton />
             </Box>
         </Container>
     )

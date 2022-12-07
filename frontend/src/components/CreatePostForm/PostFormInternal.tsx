@@ -9,108 +9,150 @@ import {
     useTheme,
 } from '@mui/material'
 import CloudUploadIcon from '@mui/icons-material/CloudUpload'
+import { useFormContext } from '../../providers/useFormProvider'
+import { Navigate } from 'react-router-dom'
 
 const PostFromInternal = () => {
     const theme = useTheme()
+    const { formData, setFormData, onSubmit, submitted } = useFormContext()
 
-    return (
-        <Box
-            display="flex"
-            sx={{ pt: 10 }}
-            height="80vh"
-            justifyContent="center"
-        >
+    const handleFormFieldInput = (
+        event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    ) => {
+        event.preventDefault()
+        setFormData({
+            ...formData,
+            [event.currentTarget.id]: event.currentTarget.value,
+        })
+    }
+
+    if (submitted) {
+        setTimeout(() => {}, 1000) // Give time for database tables to update before navigating to the products page
+        return <Navigate to="/" />
+    } else {
+        return (
             <Box
-                width="35%"
-                height="100%"
-                borderRadius="6rem 0 0 3rem"
-                border={`2px solid ${theme.palette.background.paper}`}
-            ></Box>
-            <Box
-                width="50%"
-                height="100%"
-                style={{
-                    backgroundColor: theme.palette.background.paper,
-                }}
-                border={`2px solid ${theme.palette.background.paper}`}
-                borderRadius="0 3rem 6rem 0"
+                display="flex"
+                sx={{ pt: 10 }}
+                height="80vh"
+                justifyContent="center"
             >
-                <Stack sx={{ p: 4 }} spacing={4}>
-                    <Box display="flex" width="100%" alignItems="center">
-                        <Typography
-                            variant="h6"
-                            component="h1"
-                            color={theme.palette.text.primary}
-                            fontSize="2rem"
+                <Box
+                    width="35%"
+                    height="100%"
+                    borderRadius="6rem 0 0 3rem"
+                    border={`2px solid ${theme.palette.background.paper}`}
+                ></Box>
+                <Box
+                    width="50%"
+                    height="100%"
+                    style={{
+                        backgroundColor: theme.palette.background.paper,
+                    }}
+                    border={`2px solid ${theme.palette.background.paper}`}
+                    borderRadius="0 3rem 6rem 0"
+                >
+                    <Stack sx={{ p: 4 }} spacing={4}>
+                        <Box display="flex" width="100%" alignItems="center">
+                            <Typography
+                                variant="h6"
+                                component="h1"
+                                color={theme.palette.text.primary}
+                                fontSize="2rem"
+                            >
+                                Create New Post
+                            </Typography>
+                        </Box>
+                        <Box
+                            display="flex"
+                            width="100%"
+                            justifyContent="space-between"
                         >
-                            Create New Post
-                        </Typography>
-                    </Box>
-                    <Box
-                        display="flex"
-                        width="100%"
-                        justifyContent="space-between"
-                    >
-                        <TextField variant="standard" label="Title" fullWidth />
-                    </Box>
-                    <Box
-                        display="flex"
-                        width="100%"
-                        justifyContent="space-between"
-                        alignItems="center"
-                    >
-                        <Box width="45%" height="100%">
                             <TextField
                                 variant="standard"
-                                label="Price"
+                                label="Title"
+                                id="title"
                                 fullWidth
+                                value={formData.title}
+                                onChange={handleFormFieldInput}
                             />
                         </Box>
-                        <Box width="45%" height="100%">
+                        <Box
+                            display="flex"
+                            width="100%"
+                            justifyContent="space-between"
+                            alignItems="center"
+                        >
+                            <Box width="45%" height="100%">
+                                <TextField
+                                    variant="standard"
+                                    label="Price"
+                                    id="price"
+                                    fullWidth
+                                    value={formData.price}
+                                    onChange={handleFormFieldInput}
+                                />
+                            </Box>
+                            <Box width="45%" height="100%">
+                                <TextField
+                                    variant="standard"
+                                    label="Location"
+                                    id="location"
+                                    fullWidth
+                                    value={formData.location}
+                                    onChange={handleFormFieldInput}
+                                />
+                            </Box>
+                        </Box>
+                        <Box display="flex" width="100%">
                             <TextField
+                                rows={4}
                                 variant="standard"
-                                label="Location"
+                                multiline
                                 fullWidth
-                            />
+                                label="Description"
+                                id="description"
+                                value={formData.description}
+                                onChange={handleFormFieldInput}
+                            ></TextField>
                         </Box>
-                    </Box>
-                    <Box display="flex" width="100%">
-                        <TextField
-                            rows={4}
-                            variant="standard"
-                            multiline
-                            fullWidth
-                            label="Description"
-                        ></TextField>
-                    </Box>
-                    <Box display="flex" width="100%" justifyContent="center">
-                        <Button
-                            variant="contained"
-                            endIcon={<CloudUploadIcon />}
+                        <Box
+                            display="flex"
+                            width="100%"
+                            justifyContent="center"
                         >
-                            Upload Image
-                            <input
-                                hidden
-                                type="file"
-                                accept="image/png, image/jpeg"
-                            />
-                        </Button>
-                    </Box>
-                    <Box display="flex" width="100%" justifyContent="center">
-                        <Button
-                            variant="contained"
-                            sx={{
-                                background:
-                                    'linear-gradient(248.86deg, #B6509E 10.51%, #2EBAC6 93.41%)',
-                            }}
+                            <Button variant="contained">
+                                <input
+                                    type="file"
+                                    style={{ padding: '0 0 0 5rem' }}
+                                    accept="image/png, image/jpeg"
+                                    id="imgUrl"
+                                    value={formData.imgUrl}
+                                    onChange={handleFormFieldInput}
+                                />
+                            </Button>
+                        </Box>
+                        <Box
+                            display="flex"
+                            width="100%"
+                            justifyContent="center"
                         >
-                            Submit
-                        </Button>
-                    </Box>
-                </Stack>
+                            <Button
+                                variant="contained"
+                                sx={{
+                                    background:
+                                        'linear-gradient(248.86deg, #B6509E 10.51%, #2EBAC6 93.41%)',
+                                }}
+                                onClick={onSubmit}
+                            >
+                                Submit
+                            </Button>
+                        </Box>
+                    </Stack>
+                </Box>
             </Box>
-        </Box>
-    )
+        )
+    }
 }
 
 export default PostFromInternal

@@ -1,10 +1,11 @@
+import axios from 'axios'
 import * as React from 'react'
 import { useEffect, useState, useContext, createContext } from 'react'
 
 type FormInputs = {
     title: string
     location: string
-    price: number
+    price: string
     description: string
     username: string
     imgUrl: string
@@ -12,37 +13,58 @@ type FormInputs = {
 
 interface FormContext {
     formData: FormInputs
-    setInputs: React.Dispatch<React.SetStateAction<any>>
+    setFormData: React.Dispatch<React.SetStateAction<FormInputs>>
     onSubmit: () => void
+    submitted: boolean
 }
 
 const defaultFormContext: FormContext = {
     formData: {
         title: '',
         location: '',
-        price: 0,
+        price: '',
         description: '',
         username: '',
         imgUrl: '',
     },
-    setInputs: () => {},
+    setFormData: () => {},
     onSubmit: () => {},
+    submitted: false,
 }
 
 const formContext = createContext<FormContext>(defaultFormContext)
 
-export const FormProvider = ({ children }: { children: React.ReactNode }) => {
-    const [inputs, setInputs] = useState<FormInputs>(
-        defaultFormContext.formData,
-    )
-    const onSubmit = () => {}
+export const FormProvider = ({
+    children,
+    account,
+}: {
+    children: React.ReactNode
+    account: string
+}) => {
+    const [formData, setFormData] = useState<FormInputs>({
+        ...defaultFormContext.formData,
+        username: account,
+    })
+    const [submitted, setSubmitted] = useState<boolean>(false)
+
+    const onSubmit = () => {
+        let price = parseFloat(formData.price)
+        let data = { ...formData, price }
+        console.log(data)
+        axios
+            .post(`/api/post/create`, data)
+            .then((res) => setSubmitted(true))
+            .catch((err) => alert('Problem Creating Post'))
+        setSubmitted(true)
+    }
 
     return (
         <formContext.Provider
             value={{
-                formData: inputs,
-                setInputs,
+                formData,
+                setFormData,
                 onSubmit,
+                submitted,
             }}
         >
             {children}

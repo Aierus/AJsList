@@ -57,6 +57,7 @@ function ProductInternal(product: PostType) {
 
     const handleDeleteClick = () => {
         const error = deletePost(product._id)
+        setTimeout(() => {}, 1000)
         console.log('delete clicked!')
         if (error) {
             alert('Problem Deleting Post')

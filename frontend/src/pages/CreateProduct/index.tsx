@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { useEffect } from 'react'
 import { Navigate } from 'react-router-dom'
 
 import { Container, useTheme } from '@mui/material'
@@ -14,15 +15,14 @@ export const CreateProduct = () => {
         alert('Please Connect to MetaMask!')
     }
 
-    // if (!isConnected) {
-    //     metamaskAlert()
-    //     return <Navigate to="/" />
-    // } else
-    {
+    if (!isConnected) {
+        metamaskAlert()
+        return <Navigate to="/" />
+    } else {
         return (
             <Container sx={{ py: 5 }}>
                 {/* Begin Product Edit Form Component here */}
-                <CreatePostForm />
+                <CreatePostForm account={account} />
             </Container>
         )
     }

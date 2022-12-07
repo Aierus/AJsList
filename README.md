@@ -6,7 +6,8 @@
 
    ```
    PORT=8080
-   MONGODB_URL=mongodb+srv://hoseina:2g3ydvEgFj965LlL@cluster0.71jtf4m.mongodb.net/?retryWrites=true&w=majority
+   SECRET=[secret...just type a random string]
+   MONGODB_URL=[URL]
    ```
 
 2. ### Run Backend

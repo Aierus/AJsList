@@ -20,6 +20,7 @@ import PostForm from '../../components/CreatePostForm'
 
 import PurchaseButton from './PurchaseButton'
 
+
 declare var require: any
 const img = require('../../assets/sample-img.jpg')
 
@@ -180,6 +181,7 @@ function ProductInternal(product: PostType) {
             </Container>
         )
     }
+
 }
 
 export default ProductInternal

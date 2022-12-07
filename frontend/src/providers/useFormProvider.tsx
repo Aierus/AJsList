@@ -5,7 +5,7 @@ import { useEffect, useState, useContext, createContext } from 'react'
 type FormInputs = {
     title: string
     location: string
-    price: string
+    price: string | number
     description: string
     username: string
     imgUrl: string
@@ -14,7 +14,7 @@ type FormInputs = {
 interface FormContext {
     formData: FormInputs
     setFormData: React.Dispatch<React.SetStateAction<FormInputs>>
-    onSubmit: () => void
+    onSubmit: (id?: string) => void
     submitted: boolean
 }
 
@@ -28,7 +28,7 @@ const defaultFormContext: FormContext = {
         imgUrl: '',
     },
     setFormData: () => {},
-    onSubmit: () => {},
+    onSubmit: (id?: string) => {},
     submitted: false,
 }
 
@@ -37,9 +37,11 @@ const formContext = createContext<FormContext>(defaultFormContext)
 export const FormProvider = ({
     children,
     account,
+    context,
 }: {
     children: React.ReactNode
     account: string
+    context: 'Create' | 'Edit'
 }) => {
     const [formData, setFormData] = useState<FormInputs>({
         ...defaultFormContext.formData,
@@ -47,14 +49,18 @@ export const FormProvider = ({
     })
     const [submitted, setSubmitted] = useState<boolean>(false)
 
-    const onSubmit = () => {
-        let price = parseFloat(formData.price)
+    const onSubmit = (id?: string) => {
+        let price = parseFloat(String(formData.price))
         let data = { ...formData, price }
-        console.log(data)
-        axios
-            .post(`/api/post/create`, data)
-            .then((res) => setSubmitted(true))
-            .catch((err) => alert('Problem Creating Post'))
+
+        if (context === 'Create') {
+            axios
+                .post(`/api/post/create`, data)
+                .then((res) => setSubmitted(true))
+                .catch((err) => alert('Problem Creating Post'))
+        } else if (context === 'Edit') {
+            axios.put(`/api/post/update/${id}`, data)
+        }
         setSubmitted(true)
     }
 

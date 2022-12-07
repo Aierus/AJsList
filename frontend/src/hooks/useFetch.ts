@@ -6,7 +6,7 @@ export type PostType = {
     _id: string
     description: string
     location: string
-    price: number
+    price: number | string
     title: string
     username: string
     imgUrl?: string

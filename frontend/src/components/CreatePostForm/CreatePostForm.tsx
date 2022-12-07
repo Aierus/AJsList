@@ -8,11 +8,11 @@ import {
     Button,
     useTheme,
 } from '@mui/material'
-import CloudUploadIcon from '@mui/icons-material/CloudUpload'
 import { useFormContext } from '../../providers/useFormProvider'
 import { Navigate } from 'react-router-dom'
+import LeftPanel from './AJsListPanel'
 
-const PostFromInternal = () => {
+const CreatePostForm = () => {
     const theme = useTheme()
     const { formData, setFormData, onSubmit, submitted } = useFormContext()
 
@@ -26,6 +26,10 @@ const PostFromInternal = () => {
         })
     }
 
+    const handleSubmitClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+        onSubmit()
+    }
+
     if (submitted) {
         setTimeout(() => {}, 1000) // Give time for database tables to update before navigating to the products page
         return <Navigate to="/" />
@@ -37,12 +41,7 @@ const PostFromInternal = () => {
                 height="80vh"
                 justifyContent="center"
             >
-                <Box
-                    width="35%"
-                    height="100%"
-                    borderRadius="6rem 0 0 3rem"
-                    border={`2px solid ${theme.palette.background.paper}`}
-                ></Box>
+                <LeftPanel />
                 <Box
                     width="50%"
                     height="100%"
@@ -143,7 +142,7 @@ const PostFromInternal = () => {
                                     background:
                                         'linear-gradient(248.86deg, #B6509E 10.51%, #2EBAC6 93.41%)',
                                 }}
-                                onClick={onSubmit}
+                                onClick={handleSubmitClick}
                             >
                                 Submit
                             </Button>
@@ -155,4 +154,4 @@ const PostFromInternal = () => {
     }
 }
 
-export default PostFromInternal
+export default CreatePostForm

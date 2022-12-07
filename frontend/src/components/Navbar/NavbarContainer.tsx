@@ -21,19 +21,28 @@ const NavbarContainer = () => {
                 alignItems="center"
                 height="100%"
             >
-                <Typography
-                    variant="h5"
-                    component="h1"
-                    color={theme.palette.text.primary}
-                >
-                    AJ's List
-                </Typography>
-
-                <Link to="/create">
-                    <Button variant="contained">Create Post</Button>
+                <Link to="/" style={{ textDecoration: 'none' }}>
+                    <Typography
+                        variant="h5"
+                        component="h1"
+                        color={theme.palette.text.primary}
+                    >
+                        AJ's List
+                    </Typography>
                 </Link>
 
-                <ConnectButton />
+                <Box
+                    display="flex"
+                    justifyContent="end"
+                    alignItems="center"
+                    gap={3}
+                >
+                    <Link to="/create" style={{ textDecoration: 'none' }}>
+                        <Button variant="contained">Create Post</Button>
+                    </Link>
+
+                    <ConnectButton />
+                </Box>
             </Box>
         </Container>
     )

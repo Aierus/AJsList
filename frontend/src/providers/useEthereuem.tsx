@@ -52,6 +52,7 @@ export const EthereumProvider = ({
         if (window.ethereum.isMetaMask) {
             setIsMetaMask(window.ethereum.isMetaMask)
             setMetamaskProvider(window.ethereum)
+            console.log(metamaskProvider)
             if (metamaskProvider.selectedAddress) {
                 setAccount(metamaskProvider.selectedAddress)
                 setIsConnected(true)

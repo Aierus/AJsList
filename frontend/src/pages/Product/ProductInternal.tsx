@@ -15,6 +15,11 @@ import {
 import { PostType } from '../../hooks/useFetch'
 import { useEthereum } from '../../providers/useEthereuem'
 
+import { usePageContext } from './pageContext'
+import PostForm from '../../components/CreatePostForm'
+
+import PurchaseButton from './PurchaseButton'
+
 declare var require: any
 const img = require('../../assets/sample-img.jpg')
 
@@ -30,6 +35,7 @@ function ProductInternal(product: PostType) {
     const theme = useTheme()
     const { account } = useEthereum()
     const [deleted, setDeleted] = useState<boolean>(false)
+    const { pageState, setPageState } = usePageContext()
 
     const displayControls = () => {
         if (account.toLowerCase() === product.username.toLowerCase()) {
@@ -40,7 +46,9 @@ function ProductInternal(product: PostType) {
                     justifyContent="space-around"
                     gap={3}
                 >
-                    <Button variant="contained">Edit</Button>
+                    <Button variant="contained" onClick={handleEditClick}>
+                        Edit
+                    </Button>
                     <Button
                         variant="contained"
                         color="warning"
@@ -51,7 +59,7 @@ function ProductInternal(product: PostType) {
                 </Box>
             )
         } else {
-            return <Button variant="outlined">Purchase</Button>
+            return <PurchaseButton product={product} />
         }
     }
 
@@ -66,8 +74,14 @@ function ProductInternal(product: PostType) {
         }
     }
 
+    const handleEditClick = () => {
+        setPageState('Edit')
+    }
+
     if (deleted) {
         return <Navigate to="/" />
+    } else if (pageState === 'Edit') {
+        return <PostForm account={account} context={'Edit'} />
     } else {
         return (
             <Container sx={{ py: 5 }}>

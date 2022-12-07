@@ -9,6 +9,7 @@ import { theme } from './theme'
 import ListProducts from './pages/ListProducts'
 import Product from './pages/Product'
 import Navbar from './components/Navbar'
+import { CreateProduct } from './pages/CreateProduct'
 
 function App() {
     return (
@@ -26,6 +27,7 @@ function App() {
                     <Routes>
                         <Route path="" element={<ListProducts />} />
                         <Route path="/:id" element={<Product />} />
+                        <Route path="/create" element={<CreateProduct />} />
                     </Routes>
                 </Container>
             </ThemeProvider>

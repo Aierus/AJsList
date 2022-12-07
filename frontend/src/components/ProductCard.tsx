@@ -25,12 +25,20 @@ const firstTwentyChars = (content: string) => {
     return content
 }
 
-type PropTypes = {
-    data: PostType
-    key: number
+const firstTenChars = (content: string) => {
+    if (content.length > 10) {
+        return content.slice(0, 10) + '...'
+    } else {
+        return content
+    }
 }
 
-const ProductCard = ({ data, key }: PropTypes) => {
+type PropTypes = {
+    data: PostType
+    keyVal: number
+}
+
+const ProductCard = ({ data, keyVal }: PropTypes) => {
     const theme = useTheme()
 
     return (
@@ -42,7 +50,7 @@ const ProductCard = ({ data, key }: PropTypes) => {
                 aspectRatio: '2 / 3',
                 background: theme.palette.background.paper,
             }}
-            key={key}
+            key={keyVal}
         >
             <Link to={`/${data._id}`} style={{ textDecoration: 'none' }}>
                 <img src={img} width="100%" height="66%" />
@@ -68,7 +76,7 @@ const ProductCard = ({ data, key }: PropTypes) => {
                             fontSize=".85rem"
                             color={theme.palette.text.secondary}
                         >
-                            {data.username}
+                            {firstTenChars(data.username)}
                         </Typography>
                     </Box>
                     <Box

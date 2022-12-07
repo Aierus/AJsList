@@ -11,6 +11,7 @@ import Stack from '@mui/material/Stack'
 
 import TableHeader from './TableHeader'
 import ProductCardList from './ProductCardList'
+import LoadingSpinner from '../../components/LoadingSpinner'
 
 const ListProductsInternal = () => {
     const theme = useTheme()
@@ -21,14 +22,7 @@ const ListProductsInternal = () => {
         <Container sx={{ py: 5 }}>
             <Stack spacing={3} sx={{ pt: 10 }}>
                 <TableHeader theme={theme} />
-
-                {loading ? (
-                    <Box width="100%" display="flex" justifyContent="center">
-                        <p style={{ color: '#ffffff' }}>Loading...</p>
-                    </Box>
-                ) : (
-                    <ProductCardList data={data} />
-                )}
+                {loading ? <LoadingSpinner /> : <ProductCardList data={data} />}
             </Stack>
         </Container>
     )

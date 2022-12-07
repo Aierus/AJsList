@@ -1,8 +1,6 @@
 import * as React from 'react'
 import { PostType } from '../../hooks/useFetch'
 
-import { Theme } from '@mui/material'
-
 import ProductCard from '../../components/ProductCard'
 
 import Box from '@mui/material/Box'
@@ -26,7 +24,7 @@ const ProductCardList = ({ data }: PropTypes) => {
             id="outer-box"
         >
             {data.map((product, productIdx) => (
-                <ProductCard data={product} key={productIdx} />
+                <ProductCard data={product} keyVal={productIdx} />
             ))}
         </Box>
     )

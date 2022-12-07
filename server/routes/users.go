@@ -1,6 +1,7 @@
 package routes
 
 import (
+	"os"
 	"context"
 	"fmt"
 	"net/http"
@@ -11,8 +12,10 @@ import (
 	"golang.org/x/crypto/bcrypt"
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
+	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
+	"github.com/golang-jwt/jwt/v4"
 )
 
 var user_validate = validator.New()
@@ -57,5 +60,53 @@ func Signup(c *gin.Context) {
 	}
 	defer cancel()
 	c.JSON(http.StatusOK, result)
+}
 
+func Login(c *gin.Context) {
+
+	// Get email and pass from request body
+	var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
+	var body struct {
+		Email    *string
+		Password string
+	}
+
+	if err := c.BindJSON(&body); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	// Find the requested user document
+	var user models.User
+	if err := usersCollection.FindOne(ctx, bson.M{"email": bson.M{"$exists": true, "$eq": body.Email}}).Decode(&user); err != nil {
+    	c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}	
+	
+	
+	// Compare login in pass with the saved user pass
+	err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(body.Password))
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid email or password"})
+		return
+	}
+
+	// Generate JWT 
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims {
+		"sub": user.ID,
+		"exp": time.Now().Add(time.Hour * 24 * 30).Unix(),
+	})
+
+	tokenString, err := token.SignedString([]byte(os.Getenv("SECRET")))
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Failed to create token"})
+		return
+	}
+
+	// Send the token back
+	c.JSON(http.StatusOK, gin.H {
+		"token": tokenString,
+	})
+
+	defer cancel()
 }

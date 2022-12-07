@@ -38,6 +38,8 @@ func main() {
 
 	// Users endpoints
 	router.POST("/signup", routes.Signup)
+	router.POST("/login", routes.Login)
+
 
 
 

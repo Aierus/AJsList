@@ -25,6 +25,14 @@ const firstTwentyChars = (content: string) => {
     return content
 }
 
+const firstTenChars = (content: string) => {
+    if (content.length > 10) {
+        return content.slice(0, 10) + '...'
+    } else {
+        return content
+    }
+}
+
 type PropTypes = {
     data: PostType
     keyVal: number
@@ -68,7 +76,7 @@ const ProductCard = ({ data, keyVal }: PropTypes) => {
                             fontSize=".85rem"
                             color={theme.palette.text.secondary}
                         >
-                            {data.username}
+                            {firstTenChars(data.username)}
                         </Typography>
                     </Box>
                     <Box

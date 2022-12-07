@@ -6,6 +6,7 @@
 
    ```
    PORT=8080
+   SECRET=[secret...just type a random string]
    MONGODB_URL=[URL]
    ```
 
